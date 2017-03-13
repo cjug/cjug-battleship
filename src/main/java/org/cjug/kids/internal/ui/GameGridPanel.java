@@ -16,7 +16,7 @@ import javax.swing.border.Border;
 
 public class GameGridPanel extends JPanel {
 	
-	String[] columnLabels = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+	String[] rowLabels = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 	
 	Map<String, JPanel> jpanelMap;
 	
@@ -24,17 +24,18 @@ public class GameGridPanel extends JPanel {
 		super(new GridLayout(11,11));
 		this.jpanelMap = new HashMap<>();
 		add(createLabelGridbox(""));
-		for(String label : columnLabels)
+		for(int col = 1; col < 11; col ++)
+		{
+			add(createLabelGridbox(Integer.toString(col)));
+		}
+
+		for(String label : rowLabels)
 		{
 			add(createLabelGridbox(label));
-		}
-		for(int row = 1; row < 11; row ++)
-		{
-			add(createLabelGridbox(Integer.toString(row)));
-			for(int col = 0; col < 10; col++)
+			for(int col = 1; col < 11; col++)
 			{
 				JPanel gridComp = createGridBox();
-				this.jpanelMap.put("box"+this.columnLabels[col] + "" + (row) , gridComp);
+				this.jpanelMap.put("box"+ label + "" + (col) , gridComp);
 				add(gridComp);
 			}
 		}
@@ -57,14 +58,14 @@ public class GameGridPanel extends JPanel {
 		return box;
 	}
 	
-	public void triggerGrid(String col, int row)
+	public void triggerGrid(String row, int col)
 	{
-		setGridColor(col, row, Color.RED);
+		setGridColor(row, col, Color.RED);
 	}
 	
-	public void setGridColor(String col, int row, Color color)
+	public void setGridColor(String row, int col, Color color)
 	{
-		JPanel triggeredPanel = this.jpanelMap.get("box" + col + "" + row);
+		JPanel triggeredPanel = this.jpanelMap.get("box" + row + "" + col);
 		triggeredPanel.setBackground(color);
 	}
 	

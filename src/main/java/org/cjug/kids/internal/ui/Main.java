@@ -1,17 +1,19 @@
 package org.cjug.kids.internal.ui;
 
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
+
+import org.cjug.kids.internal.model.Player;
 
 public class Main extends JFrame {
 
@@ -24,6 +26,8 @@ public class Main extends JFrame {
 	private Map<String, PlayerPanel> playerPanelMap;
 	
 	private GridBagConstraints c = new GridBagConstraints();
+	
+	private String gameName;
 
     public Main() {
     	
@@ -46,6 +50,23 @@ public class Main extends JFrame {
     	});
     	
     	menu.add(resetMenuItem);
+    	
+    	
+    	menu.addSeparator();
+    	ButtonGroup group = new ButtonGroup();
+    	
+    	group.getSelection();
+    	JRadioButtonMenuItem gameMenuItem = new JRadioButtonMenuItem("Hide and Seek");
+    	gameMenuItem.setActionCommand("hide-and-seek");
+    	gameMenuItem.setSelected(true);
+    	gameMenuItem.addActionListener(new GameActionListener(this));
+    	
+    	
+    	
+    	group.add(gameMenuItem);
+    	menu.add(gameMenuItem);
+    	
+    	menu.addSeparator();
     	
     	JMenuItem exitMenuItem = new JMenuItem("Exit", KeyEvent.VK_X);
     	
@@ -88,6 +109,8 @@ public class Main extends JFrame {
     	add(mainGridPanel);
 
     	setDefaultCloseOperation(EXIT_ON_CLOSE);
+    	
+    	this.gameName = group.getSelection().getActionCommand();
 
 	}
     
@@ -98,6 +121,18 @@ public class Main extends JFrame {
     	});
     	
     	
+    }
+    
+    public boolean isPlayerActive(String id)
+    {
+    	for(PlayerPanel currentPlayerPanel : this.playerPanelMap.values())
+    	{
+    		if(currentPlayerPanel.isPlayerActive(id))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
     public void stop()
@@ -111,6 +146,15 @@ public class Main extends JFrame {
 	
 	public Map<String, PlayerPanel> getPlayerPanelMap() {
 		return playerPanelMap;
+	}
+	
+	public String getGameName() {
+		return gameName;
+	}
+	
+	public void setGameName(String gameName)
+	{
+		this.gameName = gameName;
 	}
 
 }

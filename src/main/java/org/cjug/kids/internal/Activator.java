@@ -11,6 +11,7 @@ import org.apache.camel.impl.JndiRegistry;
 import org.apache.camel.impl.PropertyPlaceholderDelegateRegistry;
 import org.apache.camel.impl.SimpleRegistry;
 import org.cjug.kids.internal.routes.CoreRouteBuilder;
+import org.cjug.kids.internal.routes.HideAndSeekRouteBuilder;
 import org.cjug.kids.internal.ui.Main;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -45,6 +46,7 @@ public class Activator implements BundleActivator {
 		}
 		
 		this.camelContext.addRoutes(new CoreRouteBuilder());
+		this.camelContext.addRoutes(new HideAndSeekRouteBuilder());
 		
 		this.camelContext.start();
 		
