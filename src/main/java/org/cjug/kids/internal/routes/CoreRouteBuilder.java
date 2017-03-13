@@ -14,7 +14,8 @@ public class CoreRouteBuilder extends RouteBuilder {
 		
 		Main mainGrid = getContext().getRegistry().lookupByNameAndType("mainGui", Main.class);
 		
-		restConfiguration("netty4-http").host("localhost").port(8890).bindingMode(RestBindingMode.json);
+		restConfiguration("netty4-http").host("0.0.0.0").port(8890).bindingMode(RestBindingMode.json)
+		.enableCORS(true);
 		
 		interceptFrom("rest:/games/{gameName}/*").to("direct:checkGameName");
 		

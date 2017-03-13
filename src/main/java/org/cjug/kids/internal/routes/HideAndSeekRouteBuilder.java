@@ -38,10 +38,12 @@ public class HideAndSeekRouteBuilder extends RouteBuilder {
 				result.put("error", e.getMessage());
 					
 				exchange.getIn().setBody(result);
+				
+				exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 500);
 			}
 		});
 		
-		rest("/games/hide-and-seak")
+		rest("/games/hide-and-seek")
 		.post("check").type(GridPosition.class).to("direct:checkGrid")
 		.post("register").type(Player.class).outType(Player.class).to("direct:registerPlayer")
 		.post("unregister/{team}/{playerId}").to("direct:unregisterPlayer");
